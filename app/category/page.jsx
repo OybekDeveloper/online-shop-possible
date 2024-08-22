@@ -9,7 +9,7 @@ export default async function Products() {
   );
   const response2 = await axios.get(
     `https://joinposter.com/api/menu.getProducts?token=967898:49355888e8e490af3bcca79c5e6b1abf`
-  )
+  );
   const categoryData = response.data.response; // Assuming response.data contains the category data
   const productsData = response2.data.response; // Assuming response.data contains the category data
   console.log(productsData);
