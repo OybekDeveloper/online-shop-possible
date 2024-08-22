@@ -1,13 +1,12 @@
-"use client"
-import React, { Suspense } from "react";
+"use client";
+import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function CategoryPageContent(props) {
+function CategoryPageContent({ categoryData }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("categoryId");
 
-  const { categoryData } = props;
   const handleCategoryChange = (id) => {
     router.push(`/category?categoryId=${id}`);
   };
@@ -33,10 +32,4 @@ function CategoryPageContent(props) {
   );
 }
 
-export default function CategoryPage(props) {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CategoryPageContent {...props} />
-    </Suspense>
-  );
-}
+export default CategoryPageContent;

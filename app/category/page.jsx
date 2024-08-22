@@ -12,7 +12,6 @@ export default async function Products() {
   );
   const categoryData = response.data.response; // Assuming response.data contains the category data
   const productsData = response2.data.response; // Assuming response.data contains the category data
-  console.log(productsData);
   return (
     <main className="min-h-screen max-w-7xl w-11/12 mx-auto xl:px-0 mt-[80px]">
       <CategoryPage categoryData={categoryData} />

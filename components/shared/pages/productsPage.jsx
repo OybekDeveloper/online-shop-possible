@@ -1,7 +1,6 @@
-"use client";
-
-import { useRouter, useSearchParams } from "next/navigation";
+"use client"
 import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import CustomImage from "../customImage";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
