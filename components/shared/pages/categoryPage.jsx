@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -10,6 +11,10 @@ function CategoryPageContent({ categoryData }) {
   const handleCategoryChange = (id) => {
     router.push(`/category?categoryId=${id}`);
   };
+
+  if (!categoryData) {
+    return <div>No categories available</div>; // Fallback if categoryData is not available
+  }
 
   return (
     <div className="sticky top-[58px] whitespace-nowrap overflow-x-auto w-full no-scrollbar z-10">
