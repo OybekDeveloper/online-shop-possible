@@ -1,12 +1,12 @@
-"use client"
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import CustomImage from "../customImage";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 
-export default function ProductsPage({ productsData }) {
+function ProductsPageContent({ productsData }) {
   const router = useRouter();
   const { toast } = useToast();
   const searchParams = useSearchParams();
@@ -104,5 +104,12 @@ export default function ProductsPage({ productsData }) {
         );
       })}
     </div>
+  );
+}
+export function ProductsPage({ productsData }) {
+  return (
+    <Suspense>
+      <ProductsPageContent productsData={productsData} />
+    </Suspense>
   );
 }

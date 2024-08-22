@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 function CategoryPageContent({ categoryData }) {
@@ -37,4 +37,10 @@ function CategoryPageContent({ categoryData }) {
   );
 }
 
-export default CategoryPageContent;
+export function CategoryPage({ categoryData }) {
+  return (
+    <Suspense>
+      <CategoryPageContent categoryData={categoryData} />
+    </Suspense>
+  );
+}

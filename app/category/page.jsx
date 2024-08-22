@@ -1,5 +1,5 @@
-import CategoryPage from "@/components/shared/pages/categoryPage";
-import ProductsPage from "@/components/shared/pages/productsPage";
+import { CategoryPage } from "@/components/shared/pages/categoryPage";
+import { ProductsPage } from "@/components/shared/pages/productsPage";
 import axios from "axios";
 import React from "react";
 
