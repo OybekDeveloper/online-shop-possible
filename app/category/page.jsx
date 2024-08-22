@@ -2,13 +2,14 @@ import CategoryPage from "@/components/shared/pages/categoryPage";
 import ProductsPage from "@/components/shared/pages/productsPage";
 import axios from "axios";
 import React from "react";
+const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
 export default async function Products() {
   const response = await axios.get(
-    `https://joinposter.com/api/menu.getCategories?token=967898:49355888e8e490af3bcca79c5e6b1abf`
+    `https://joinposter.com/api/menu.getCategories?token=${apiKey}`
   );
   const response2 = await axios.get(
-    `https://joinposter.com/api/menu.getProducts?token=967898:49355888e8e490af3bcca79c5e6b1abf`
+    `https://joinposter.com/api/menu.getProducts?token=${apiKey}`
   );
   const categoryData = response.data.response; // Assuming response.data contains the category data
   const productsData = response2.data.response; // Assuming response.data contains the category data
