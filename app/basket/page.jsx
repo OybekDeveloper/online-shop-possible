@@ -157,9 +157,12 @@ const ShoppingCart = () => {
                   <p className="mb-1 text-lg font-bold">{total} сум</p>
                 </div>
               </div>
-              <Button className="mt-6 w-full rounded-md bg-yellow-500 py-4 font-medium  text-yellow-50 hover:bg-yellow-600">
-                <Link href={"/order"}>Оформить заказ</Link>
-              </Button>
+
+              <Link href={"/order"}>
+                <Button className="mt-6 w-full rounded-md bg-yellow-500 py-4 font-medium  text-yellow-50 hover:bg-yellow-600">
+                  Оформить заказ
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
