@@ -13,12 +13,6 @@ const Navbar = () => {
         <div className="flex items-center space-x-2.5 text-sm">
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <Link
-              href={"/"}
-              className="mr-5 text-gray-900 hover:text-gray-500"
-            >
-              Главная
-            </Link>
-            <Link
               href={"/category?categoryId=1"}
               className="mr-5 text-gray-900 hover:text-gray-500"
             >
