@@ -7,9 +7,15 @@ import { useEffect, useState } from "react";
 
 const ShoppingCart = () => {
   const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState(
-    JSON.parse(localStorage.getItem("carts")) || []
-  );
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Ensure localStorage is only accessed on the client side
+    const storedProducts = localStorage.getItem("carts");
+    if (storedProducts) {
+      setProducts(JSON.parse(storedProducts));
+    }
+  }, []);
 
   const removeProduct = (id) => {
     const updatedCart = products.filter((product) => product.product_id !== id);
