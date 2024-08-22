@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomImage from "../customImage";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,38 +13,36 @@ export default function ProductsPage({ productsData }) {
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("categoryId");
 
-  const handleClick = (product) => {
-    const products = JSON.parse(localStorage.getItem("carts")) || [];
+  const [cart, setCart] = useState([]);
 
-    const isExistProduct = products.find(
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem("carts")) || []);
+  }, []);
+
+  const handleClick = (product) => {
+    const isExistProduct = cart.find(
       (c) => c.product_id === product?.product_id
     );
 
-    if (isExistProduct) {
-      const updatedData = products.map((c) => {
-        if (c.product_id === product?.product_id) {
-          return {
-            ...c,
-            quantity: c.quantity + 1,
-          };
-        }
+    const updatedData = isExistProduct
+      ? cart.map((c) =>
+          c.product_id === product?.product_id
+            ? { ...c, quantity: c.quantity + 1 }
+            : c
+        )
+      : [...cart, { ...product, quantity: 1 }];
 
-        return c;
-      });
+    localStorage.setItem("carts", JSON.stringify(updatedData));
+    setCart(updatedData);
 
-      localStorage.setItem("carts", JSON.stringify(updatedData));
-    } else {
-      const data = [...products, { ...product, quantity: 1 }];
-      localStorage.setItem("carts", JSON.stringify(data));
-    }
     toast({
       title: "Product Added to Cart",
       description: "The item has been successfully added to your cart.",
-      duration: 5000, // Duration in milliseconds (5000ms = 5 seconds)
-      position: "top-right", // Position on the screen (e.g., 'top-right', 'bottom-left', etc.)
-      icon: "🛒", // You can use emojis or custom icons
-      variant: "success", // Can be 'success', 'error', 'info', etc. if supported
-      className: "bg-green-500 text-white font-bold", // Custom class for styling
+      duration: 5000,
+      position: "top-right",
+      icon: "🛒",
+      variant: "success",
+      className: "bg-green-500 text-white font-bold",
       action: (
         <ToastAction
           onClick={() => router.push("/basket")}
@@ -57,7 +55,6 @@ export default function ProductsPage({ productsData }) {
     });
   };
 
-  console.log(productsData);
   return (
     <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
       {productsData.map((item, idx) => {
@@ -83,7 +80,7 @@ export default function ProductsPage({ productsData }) {
 
             <div className="w-full">
               <div className="w-full space-y-2">
-                <h1 className="text-xl md:text-4xl font-bold">
+                <h1 className="text-xl md:text-2xl font-bold">
                   {item.product_name.length > 20
                     ? item.product_name.slice(0, 20) + "..."
                     : item.product_name}
@@ -96,7 +93,7 @@ export default function ProductsPage({ productsData }) {
                     Add Basket
                   </Button>
                   <h2 className="text-gray-500 font-bold text-sm">
-                    ${item.price ? item.price["1"] : "0"} сум
+                    {item.price ? item.price["1"] : "0"} сум
                   </h2>
                 </div>
               </div>

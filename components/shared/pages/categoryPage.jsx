@@ -1,8 +1,8 @@
-"use client";
-
+"use client"
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function CategoryPage(props) {
+function CategoryPageContent(props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("categoryId");
@@ -11,7 +11,7 @@ export default function CategoryPage(props) {
   const handleCategoryChange = (id) => {
     router.push(`/category?categoryId=${id}`);
   };
-  
+
   return (
     <div className="sticky top-[58px] whitespace-nowrap overflow-x-auto w-full no-scrollbar z-10">
       <div className="bg-white py-2 mt-5 z-10 w-full">
@@ -30,5 +30,13 @@ export default function CategoryPage(props) {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function CategoryPage(props) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CategoryPageContent {...props} />
+    </Suspense>
   );
 }
