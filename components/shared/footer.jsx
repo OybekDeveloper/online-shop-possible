@@ -6,12 +6,12 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="text-gray-600 body-font">
-      <div className="w-11/12 mx-auto max-w-7xl py-8 flex items-center sm:flex-row flex-col">
+      <div className="w-11/12 mx-auto max-w-7xl py-8 flex items-center sm:flex-row flex-col space-y-2">
         <Link href={"/"} className="font-bold text-xl">
           {/* <Image src={logo} alt={"logo"} width={150} height={40} /> */}
           Possible
         </Link>
-        <p className="text-sm w-full text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
+        <p className="text-sm w-full text-gray-500 sm:ml-4 max-sm:text-center sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
           © 2020 possible —
           <a
             href="https://possible.uz"
@@ -22,7 +22,7 @@ const Footer = () => {
             Possible.uz
           </a>
         </p>
-        <div className="flex justify-end gap-4 items-center w-full">
+        <div className="flex justify-center sm:justify-end gap-4 items-center w-full">
           <Link href={"#"}>
             <Facebook />
           </Link>
