@@ -35,8 +35,8 @@ function ProductsPageContent({ productsData }) {
     setCart(updatedData);
 
     toast({
-      title: "Product Added to Cart",
-      description: "The item has been successfully added to your cart.",
+      title: "Товар добавлен в корзину",
+      description: "Товар успешно добавлен в вашу корзину..",
       duration: 5000,
       position: "top-right",
       icon: "🛒",
@@ -45,10 +45,10 @@ function ProductsPageContent({ productsData }) {
       action: (
         <ToastAction
           onClick={() => router.push("/basket")}
-          altText="Show Basket"
+          altText="Показать корзину"
           className="bg-transparent hover:bg-transparent"
         >
-          Show Basket
+          Показать корзину
         </ToastAction>
       ),
     });
@@ -89,7 +89,7 @@ function ProductsPageContent({ productsData }) {
                     onClick={() => handleClick(item)}
                     className="bg-yellow-500 hover:bg-yellow-400"
                   >
-                    Add Basket
+                    Добавить корзину
                   </Button>
                   <h2 className="text-gray-500 font-bold text-sm">
                     {item.price ? item.price["1"] : "0"} сум

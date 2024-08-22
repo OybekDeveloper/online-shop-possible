@@ -61,11 +61,17 @@ const ShoppingCart = () => {
 
   useEffect(() => {
     const total = products.reduce((acc, item) => {
-      return acc + item.price["1"] * item.quantity;
+      // Check if item and its price["1"] exist before performing calculations
+      if (item && item.price && item.price["1"]) {
+        return acc + item.price["1"] * item.quantity;
+      }
+      // Default to 1 if price["1"] is not available
+      return acc + (1 * item.quantity);
     }, 0);
-
+  
     setTotal(total);
   }, [products]);
+  
 
   return (
     <>
@@ -128,7 +134,9 @@ const ShoppingCart = () => {
                         </span>
                       </div>
                       <div className="flex items-center space-x-4">
-                        <p className="text-sm">{product.price["1"]} сум</p>
+                        <p className="text-sm">
+                          {product.price ? product.price["1"] : 0} сум
+                        </p>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
