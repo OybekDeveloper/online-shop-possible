@@ -158,7 +158,7 @@ const ShoppingCart = () => {
                 </div>
               ))}
             </div>
-            <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+            <div className="sticky top-[100px] mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
               <div className="flex justify-between">
                 <p className="text-lg font-bold">Сумма заказа:</p>
                 <div className="">
