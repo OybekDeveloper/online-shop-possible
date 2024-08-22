@@ -17,7 +17,7 @@ function CategoryPageContent({ categoryData }) {
   }
 
   return (
-    <div className="sticky top-[58px] whitespace-nowrap overflow-x-auto w-full no-scrollbar z-10">
+    <div className="bg-white sticky top-[58px] whitespace-nowrap overflow-x-auto w-full no-scrollbar z-10">
       <div className="bg-white py-2 mt-5 z-10 w-full">
         {categoryData.map((item) => (
           <div
