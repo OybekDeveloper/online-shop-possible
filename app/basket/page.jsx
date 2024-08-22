@@ -77,7 +77,7 @@ const ShoppingCart = () => {
     <>
       {products.length ? (
         <div className="min-h-screen bg-gray-100 pt-20">
-          <h1 className="my-10 text-center text-2xl font-bold">
+          <h1 className="max-w-7xl mx-auto w-11/12 my-10 text-start text-2xl font-bold">
             Корзина ({products.length})
           </h1>
           <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">

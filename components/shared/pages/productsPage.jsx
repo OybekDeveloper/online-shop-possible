@@ -46,7 +46,7 @@ function ProductsPageContent({ productsData }) {
         <ToastAction
           onClick={() => router.push("/basket")}
           altText="Показать корзину"
-          className="bg-transparent hover:bg-transparent"
+          className="bg-green-600 hover:bg-green-400 rounded-md translation-all duration-300 ease-linear text-sm px-2 py-1"
         >
           Показать корзину
         </ToastAction>
