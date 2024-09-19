@@ -8,7 +8,8 @@ import {
 import React, { useState, useEffect } from "react";
 
 function YandexMap() {
-  const apiKey = process.env.NEXT_PUBLIC_YMAPS_API_KEY;
+  // const apiKey = process.env.NEXT_PUBLIC_YMAPS_API_KEY;
+  const apiKey = "3a1c9f57-aea9-4d3d-b566-816f722d2129";
   const [coordinates, setCoordinates] = useState(null); // Marker coordinates
   const [locationAvailable, setLocationAvailable] = useState(true); // To check if location should be available
 
