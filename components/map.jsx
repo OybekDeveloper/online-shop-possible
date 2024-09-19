@@ -13,7 +13,6 @@ function YandexMap() {
   const [locationAvailable, setLocationAvailable] = useState(true); // To check if location is available
   const [mapInstance, setMapInstance] = useState(null); // Store the map instance
   const [zoom, setZoom] = useState(14); // Zoom level state
-
   // Handle map click to get coordinates
   const handleMapClick = (e) => {
     const coords = e.get("coords"); // Get coordinates of clicked place
@@ -24,6 +23,9 @@ function YandexMap() {
   // Get user's current location
   const getUserLocation = () => {
     if (navigator.geolocation) {
+      console.log(navigator);
+      navigator.geolocation.getCurrentPosition(function () {}, function () {}, {});
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const userCoordinates = [
@@ -52,22 +54,13 @@ function YandexMap() {
     }
   };
 
-  useEffect(() => {
-    // Check if the user has granted location permission before
-    const permissionGranted = localStorage.getItem("locationPermissionGranted");
-    if (permissionGranted !== "true") {
-      // If permission is not granted yet, get user location
-      getUserLocation();
-    } else {
-      // If permission has already been granted, get user location without asking
-      getUserLocation();
-    }
-  }, [mapInstance, zoom]); // Dependency array includes mapInstance and zoom
-
   return (
     <YMaps query={{ apikey: apiKey }}>
       <Map
-        defaultState={{ center: coordinates || [55.751574, 37.573856], zoom: zoom }} // Use zoom state
+        defaultState={{
+          center: coordinates || [55.751574, 37.573856],
+          zoom: zoom,
+        }} // Use zoom state
         width="100%"
         height="400px"
         onClick={handleMapClick} // Get coordinates on map click
@@ -88,6 +81,8 @@ function YandexMap() {
         )}
         <FullscreenControl />
       </Map>
+      <Button onClick={getUserLocation}>Get my location</Button>
+
       {locationAvailable ? (
         coordinates ? (
           <div>
