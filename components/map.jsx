@@ -3,7 +3,6 @@ import {
   YMaps,
   Placemark,
   FullscreenControl,
-  GeolocationControl,
 } from "@pbe/react-yandex-maps";
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
@@ -13,7 +12,7 @@ function YandexMap() {
   const [coordinates, setCoordinates] = useState(null); // Marker coordinates
   const [locationAvailable, setLocationAvailable] = useState(true); // To check if location is available
   const [mapInstance, setMapInstance] = useState(null); // Store the map instance
-  const [isFirstVisit, setIsFirstVisit] = useState(true); // Track first visit
+  const [zoom, setZoom] = useState(14); // Zoom level state
 
   // Handle map click to get coordinates
   const handleMapClick = (e) => {
@@ -36,11 +35,8 @@ function YandexMap() {
 
           // Center the map on the user's location
           if (mapInstance) {
-            mapInstance.setCenter(userCoordinates, 16); // Set zoom level 16
+            mapInstance.setCenter(userCoordinates, zoom); // Use stored zoom level
           }
-
-          // Save permission status to localStorage (no need to ask again)
-          localStorage.setItem("locationPermissionGranted", "true");
         },
         () => {
           // Handle error (location permission denied)
@@ -56,17 +52,17 @@ function YandexMap() {
   useEffect(() => {
     // Check if the user has granted location permission before
     getUserLocation();
-  }, []);
-  console.log(coordinates, "location permission granted");
+  }, [zoom]); // Dependency array includes zoom to ensure the correct zoom level is used
 
   return (
     <YMaps query={{ apikey: apiKey }}>
       <Map
-        defaultState={{ center: coordinates && coordinates, zoom: 14 }}
+        defaultState={{ center: coordinates || [55.751574, 37.573856], zoom: zoom }} // Use zoom state
         width="100%"
         height="400px"
         onClick={handleMapClick} // Get coordinates on map click
         instanceRef={(map) => setMapInstance(map)} // Store the map instance
+        onBoundsChange={() => setZoom(mapInstance.getZoom())} // Update zoom state on bounds change
       >
         {coordinates && locationAvailable && (
           <Placemark
