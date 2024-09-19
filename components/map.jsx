@@ -37,6 +37,9 @@ function YandexMap() {
           if (mapInstance) {
             mapInstance.setCenter(userCoordinates, zoom); // Use stored zoom level
           }
+
+          // Save permission status to localStorage (no need to ask again)
+          localStorage.setItem("locationPermissionGranted", "true");
         },
         () => {
           // Handle error (location permission denied)
@@ -51,8 +54,15 @@ function YandexMap() {
 
   useEffect(() => {
     // Check if the user has granted location permission before
-    getUserLocation();
-  }, [zoom]); // Dependency array includes zoom to ensure the correct zoom level is used
+    const permissionGranted = localStorage.getItem("locationPermissionGranted");
+    if (permissionGranted !== "true") {
+      // If permission is not granted yet, get user location
+      getUserLocation();
+    } else {
+      // If permission has already been granted, get user location without asking
+      getUserLocation();
+    }
+  }, [mapInstance, zoom]); // Dependency array includes mapInstance and zoom
 
   return (
     <YMaps query={{ apikey: apiKey }}>
@@ -78,7 +88,6 @@ function YandexMap() {
         )}
         <FullscreenControl />
       </Map>
-      <Button onClick={getUserLocation}>Get my location</Button>
       {locationAvailable ? (
         coordinates ? (
           <div>
