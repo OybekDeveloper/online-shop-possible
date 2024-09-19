@@ -24,8 +24,6 @@ function YandexMap() {
   const getUserLocation = () => {
     if (navigator.geolocation) {
       console.log(navigator);
-      navigator.geolocation.getCurrentPosition(function () {}, function () {}, {});
-
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const userCoordinates = [
