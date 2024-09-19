@@ -6,18 +6,20 @@ import {
   GeolocationControl,
 } from "@pbe/react-yandex-maps";
 import React, { useState, useEffect } from "react";
+import { Button } from "./ui/button";
 
 function YandexMap() {
-  // const apiKey = process.env.NEXT_PUBLIC_YMAPS_API_KEY;
   const apiKey = "3a1c9f57-aea9-4d3d-b566-816f722d2129";
   const [coordinates, setCoordinates] = useState(null); // Marker coordinates
-  const [locationAvailable, setLocationAvailable] = useState(true); // To check if location should be available
+  const [locationAvailable, setLocationAvailable] = useState(true); // To check if location is available
+  const [mapInstance, setMapInstance] = useState(null); // Store the map instance
+  const [isFirstVisit, setIsFirstVisit] = useState(true); // Track first visit
 
   // Handle map click to get coordinates
   const handleMapClick = (e) => {
     const coords = e.get("coords"); // Get coordinates of clicked place
     setCoordinates(coords); // Update coordinates
-    setLocationAvailable(true); // Make sure location is available when map is clicked
+    setLocationAvailable(true); // Ensure location is available when map is clicked
   };
 
   // Get user's current location
@@ -25,11 +27,23 @@ function YandexMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setCoordinates([position.coords.latitude, position.coords.longitude]);
+          const userCoordinates = [
+            position.coords.latitude,
+            position.coords.longitude,
+          ];
+          setCoordinates(userCoordinates);
           setLocationAvailable(true); // Ensure location is available
+
+          // Center the map on the user's location
+          if (mapInstance) {
+            mapInstance.setCenter(userCoordinates, 16); // Set zoom level 16
+          }
+
+          // Save permission status to localStorage (no need to ask again)
+          localStorage.setItem("locationPermissionGranted", "true");
         },
         () => {
-          // Handle error
+          // Handle error (location permission denied)
           setLocationAvailable(false);
         }
       );
@@ -40,17 +54,19 @@ function YandexMap() {
   };
 
   useEffect(() => {
-    // Initialize map with user's location if available
+    // Check if the user has granted location permission before
     getUserLocation();
   }, []);
+  console.log(coordinates, "location permission granted");
 
   return (
     <YMaps query={{ apikey: apiKey }}>
       <Map
-        defaultState={{ center: [55.751574, 37.573856], zoom: 9 }}
+        defaultState={{ center: coordinates && coordinates, zoom: 14 }}
         width="100%"
         height="400px"
         onClick={handleMapClick} // Get coordinates on map click
+        instanceRef={(map) => setMapInstance(map)} // Store the map instance
       >
         {coordinates && locationAvailable && (
           <Placemark
@@ -58,19 +74,15 @@ function YandexMap() {
             options={{
               iconLayout: "default#image",
               iconImageHref:
-                "https://static.vecteezy.com/system/resources/thumbnails/024/831/288/small/3d-render-red-pin-map-location-pointer-icon-png.png", // Path to your SVG icon
+                "https://static.vecteezy.com/system/resources/thumbnails/024/831/288/small/3d-render-red-pin-map-location-pointer-icon-png.png", // Path to your icon
               iconImageSize: [50, 50],
               iconImageOffset: [-25, -50],
             }}
           />
         )}
         <FullscreenControl />
-        <GeolocationControl
-          options={{ float: "right" }}
-          onClick={getUserLocation} // Update location when GeolocationControl is clicked
-        />
       </Map>
-
+      <Button onClick={getUserLocation}>Get my location</Button>
       {locationAvailable ? (
         coordinates ? (
           <div>
@@ -81,7 +93,7 @@ function YandexMap() {
           <p>Loading...</p>
         )
       ) : (
-        <p>Yes</p>
+        <p>Location not available</p>
       )}
     </YMaps>
   );
